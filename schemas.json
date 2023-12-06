@@ -1,0 +1,46 @@
+{
+    "Brand":{
+        "type": "object",
+        "properties":{
+            "brand_id": "interger",
+            "brand_name": "string",
+            "brand_status": "interger"
+        }
+    },
+    "Category":{
+        "type": "object",
+        "properties":{
+            "category_id": "interger",
+            "category_name": "string",
+            "category_price": "interger",
+            "category_status": "interger"
+        }
+    },
+    "Gender":{
+        "type": "object",
+        "properties":{
+            "gender_id": "interger",
+            "gender_name": "string",
+            "gender_price": "interger",
+            "gender_status": "interger"
+        }
+    },
+    "Reviews":{
+        "type": "object",
+        "properties":{
+            "reviews_id": "interger",
+            "reviews_name": "string",
+            "reviews_price": "interger",
+            "reviews_status": "interger"
+        }
+    },
+    "Users":{
+        "type": "object",
+        "properties":{
+            "users_id": "interger",
+            "users_name": "string",
+            "users_price": "interger",
+            "users_status": "interger"
+        }
+    }
+}

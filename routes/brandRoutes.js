@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/brandController');
 
 router.get('/', (req, res) => {
+    controller.f_listar();
     res.send('Lista de marcas');
 });
 

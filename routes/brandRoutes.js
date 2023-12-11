@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/brandController');
 
-router.get('/', (req, res) => {
-    controller.f_listar();
-    res.send('Lista de marcas');
+router.get('/', async (req, res) => {
+    res.send(await controller.listar());
 });
 
-router.post('/', (req, res) => {
-    res.send(`Cria uma marca: ${JSON.stringify(req.body)}`);
+router.get('/:id', async (req, res) => {
+    res.send(await controller.listarUM(req.params.id));
+});
+
+router.post('/', async (req, res) => {
+    res.send(await controller.criar(req.body));
 });
 
 router.post('/:id', (req, res) => {

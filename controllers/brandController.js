@@ -1,14 +1,25 @@
-function listar(){
-    return "lista de dados"
+const DB = require('../database/index');
+const tabela = 'brands';
+
+async function listar(){
+    return await DB.execute(`SELECT * FROM ${tabela};`);
 }
 
-function listarUM(id){
-    return "lista de dados"
+async function listarUM(id){
+    return await DB.execute(`SELECT * FROM ${tabela} WHERE brand_id = ${id};`);
 }
 
-function criar(){
-    return "lista de dados"
-}
+async function criar(data){
+    try{
+        const linha = await DB.execute(`INSERT INTO ${tabela} (brand_name) VALUES ('${data.brand_name}');`);
+        return listarUM(linha.insertId);
+    } catch(error){
+        return{
+            type: 'error',
+            message: `Erro ao inserir dados: ${error.message}`
+        }
+    }
+};
 
 function editar(){
     return "lista de dados"

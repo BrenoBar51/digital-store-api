@@ -33,7 +33,6 @@ const reviewsRoutes = require('./routes/reviewsRoutes');
 
 app.use(express.json());//middlewares
 app.use(cors());//middlewares
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.get('/', (request, response) => {
     response.send('Bem-vindo à API da Digital Store');
@@ -88,6 +87,11 @@ app.use('/categories', categoriesRoutes);
 app.use('/generos', gendersRoutes);
 app.use('/users', usersRoutes);
 app.use('/reviews', reviewsRoutes);
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
+app.all('*', (req, res) =>{
+    res.status(404).send('Rota não encontrada');
+});
 
 app.listen(port, () => {
     console.log(`Servidor de pé na url: http://localhost:${port}`);

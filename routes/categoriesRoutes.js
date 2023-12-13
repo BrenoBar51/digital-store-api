@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/categoriesController');
 
-router.get('/', (req, res) => {
-    res.send('Lista de categorias');
+router.get('/:id', async (req, res) => {
+    res.send(await controller.listarUM(req.params.id));
+});
+
+router.get('/:coluna?/:ordem?', async (req, res) => {
+    res.send(await controller.listar(req.params.coluna, req.params.ordem));
 });
 
 router.post('/', (req, res) => {

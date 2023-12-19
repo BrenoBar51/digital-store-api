@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+const port = 8000;
 
 let swaggerDefinition = {
     serve: [{url: '/api'}],
@@ -23,7 +24,6 @@ let options = {
 
 let swaggerSpec = swaggerJSDoc(options);
 
-const port = 8000;
 const brandRoutes = require('./routes/brandRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
 const gendersRoutes = require('./routes/genderRoutes');
@@ -33,16 +33,6 @@ const reviewsRoutes = require('./routes/reviewsRoutes');
 
 app.use(express.json());//middlewares
 app.use(cors());//middlewares
-
-const hasToken = (req,res, next) => {
-    const body = req.body;
-    if(req.token){
-       return res.send('Token Inválido');
-    }
-    next();
-}
-
-app.use(hasToken);
 
 app.get('/', (request, response) => {
     response.send('Bem-vindo à API da Digital Store');
@@ -93,10 +83,19 @@ app.get('/', (request, response) => {
  *              description: Marca não encontrada
  */
 
+app.use('/user', userRoutes);
+
+const hasToken = (req, res, next) => {
+    if(!req.headers.authorization){
+        return res.send('Token é necessário!')
+    }
+    next();
+}
+app.use(hasToken);
+
 app.use('/marcas', brandRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/generos', gendersRoutes);
-app.use('/user', userRoutes);
 app.use('/reviews', reviewsRoutes);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 

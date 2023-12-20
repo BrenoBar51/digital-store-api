@@ -16,7 +16,7 @@ async function logar(data){
             const token = jwt.sign({user_id: result[0].user_id}, 'digital-store-api', {
                 expiresIn: '1h'
             });
-            await DB.execute(`UPDATE users SET token = ${token} WHERE user_id = ${result[0].user_id};`)
+            await DB.execute(`UPDATE users SET token = '${token}' WHERE user_id = ${result[0].user_id};`)
             return {
                 type: 'Success',
                 token

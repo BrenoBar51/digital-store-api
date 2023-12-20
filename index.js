@@ -29,6 +29,7 @@ const categoriesRoutes = require('./routes/categoriesRoutes');
 const gendersRoutes = require('./routes/genderRoutes');
 const userRoutes = require('./routes/userRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
+const userController = require('./controllers/userController');
 
 
 app.use(express.json());//middlewares
@@ -85,13 +86,26 @@ app.get('/', (request, response) => {
 
 app.use('/user', userRoutes);
 
+app.use(async (req, res, next) => {
+    if(!req.headers.authorization){
+        return res.status(401).send('Token é necessário!')
+    }
+    const result = await userController.checkToken(req.headers.authorization.split(' ')[1]);
+    if(result.length === 0){
+        return res.status(401).send('Token expirado!')
+    }
+    next();
+});
+
+/* outra maneira token
 const hasToken = (req, res, next) => {
     if(!req.headers.authorization){
-        return res.send('Token é necessário!')
+        return res.status(401).send('Token é necessário!')
     }
     next();
 }
 app.use(hasToken);
+*/
 
 app.use('/marcas', brandRoutes);
 app.use('/categories', categoriesRoutes);
